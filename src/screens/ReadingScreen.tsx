@@ -215,12 +215,6 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
                 textTransform: 'uppercase',
                 color: '#7ecf8a',
               }}>{s.movingLines}</p>
-              <p style={{
-                ...cormorant,
-                fontSize: 'clamp(10px, 1vw, 11px)',
-                color: '#5a8a60',
-                fontStyle: 'italic',
-              }}>{s.wilhelmNote}</p>
             </div>
             {movingLines.map(l => (
               <div key={l} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
