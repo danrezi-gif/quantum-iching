@@ -9,7 +9,7 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
   build: {
-    outDir: '../dist/public',
+    outDir: 'dist/public',
     emptyOutDir: true,
   },
   server: {
