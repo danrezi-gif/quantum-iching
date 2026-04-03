@@ -233,6 +233,7 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
                   lineHeight: 1.65,
                   color: '#b0d0b0',
                   fontStyle: 'italic',
+                  whiteSpace: 'pre-line',
                 }}>
                   {texts.lines[String(l)]}
                 </p>
@@ -311,6 +312,7 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
                 lineHeight: 1.75,
                 color: '#b0d0b0',
                 fontStyle: 'italic',
+                whiteSpace: 'pre-line',
               }}>
                 {texts.judgment}
               </p>
@@ -338,6 +340,7 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
                 lineHeight: 1.75,
                 color: '#b0d0b0',
                 fontStyle: 'italic',
+                whiteSpace: 'pre-line',
               }}>
                 {texts.image}
               </p>
