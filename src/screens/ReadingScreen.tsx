@@ -1,19 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CastLine, Hexagram } from '../types'
+import type { Lang } from '../strings'
+import strings, { hexagramName } from '../strings'
+import { getTexts } from '../iching'
 import HexagramDisplay from '../components/HexagramDisplay'
 
 const cinzel = { fontFamily: "'Cinzel', serif" }
 const cormorant = { fontFamily: "'Cormorant Garamond', serif" }
 
 interface Props {
+  lang: Lang
   reading: { primary: Hexagram; changing: Hexagram | null; movingLines: number[] }
   lines: CastLine[]
   intention: string
   onReset: () => void
 }
 
-export default function ReadingScreen({ reading, lines, intention, onReset }: Props) {
+export default function ReadingScreen({ lang, reading, lines, intention, onReset }: Props) {
+  const s = strings[lang]
   const { primary, changing, movingLines } = reading
+  const texts = getTexts(primary.hex, lang)
   const [interpretation, setInterpretation] = useState('')
   const [streaming, setStreaming] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -34,6 +40,7 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          lang,
           hexagram: {
             number: primary.hex,
             english: primary.english,
@@ -47,10 +54,10 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
           movingLines,
           intention,
           wilhelmData: {
-            judgment: primary.wilhelm_judgment.text,
-            image: primary.wilhelm_image.text,
+            judgment: texts.judgment,
+            image: texts.image,
             lines: Object.fromEntries(
-              movingLines.map(l => [l, primary.wilhelm_lines[String(l)]?.text ?? ''])
+              movingLines.map(l => [l, texts.lines[String(l)] ?? ''])
             ),
           },
         }),
@@ -77,7 +84,7 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
         }
       }
     } catch {
-      setInterpretation('The oracle fell silent. Please try again.')
+      setInterpretation(s.oracleSilent)
     } finally {
       setStreaming(false)
     }
@@ -96,12 +103,12 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: 'clamp(40px, 7vh, 80px) clamp(28px, 7vw, 100px)',
+          padding: 'clamp(40px, 7vh, 80px) clamp(32px, 7vw, 100px)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: 'clamp(28px, 4vh, 48px)',
-          maxWidth: 700,
+          maxWidth: 780,
           margin: '0 auto',
           width: '100%',
         }}
@@ -111,7 +118,7 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
           <span style={{
             fontSize: 'clamp(80px, 14vw, 120px)',
             lineHeight: 1,
-            color: '#3a3228',
+            color: '#b8d8b4',
             display: 'block',
           }}>
             {primary.hex_font}
@@ -122,25 +129,25 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
             fontWeight: 400,
             letterSpacing: '0.3em',
             textTransform: 'uppercase',
-            color: '#1a1a1a',
+            color: '#d8e8d4',
             marginTop: 4,
           }}>
-            {primary.english}
+            {hexagramName(primary.hex, lang) || primary.english}
           </h2>
           <p style={{
             ...cormorant,
             fontSize: 'clamp(14px, 1.5vw, 17px)',
-            color: '#6b6355',
+            color: '#7aaa80',
             letterSpacing: '0.15em',
           }}>
-            {primary.trad_chinese} · {primary.pinyin} · Hexagram {primary.hex}
+            {primary.trad_chinese} · {primary.pinyin} · {s.hexagramLabel(primary.hex)}
           </p>
           {intention && (
             <p style={{
               ...cormorant,
               fontSize: 'clamp(15px, 1.7vw, 18px)',
               fontStyle: 'italic',
-              color: '#4a4540',
+              color: '#a0c4a0',
               marginTop: 4,
             }}>
               "{intention}"
@@ -164,11 +171,11 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
               <div style={{
                 ...cormorant,
                 fontSize: 'clamp(20px, 3vw, 28px)',
-                color: '#b08030',
+                color: '#7ecf8a',
                 opacity: 0.6,
               }}>→</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
-                <span style={{ fontSize: 'clamp(40px, 7vw, 60px)', color: '#3a3228', lineHeight: 1 }}>
+                <span style={{ fontSize: 'clamp(40px, 7vw, 60px)', color: '#b8d8b4', lineHeight: 1 }}>
                   {changing.hex_font}
                 </span>
                 <span style={{
@@ -176,9 +183,9 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
                   fontSize: 'clamp(10px, 1.2vw, 13px)',
                   letterSpacing: '0.2em',
                   textTransform: 'uppercase',
-                  color: '#6b6355',
+                  color: '#7aaa80',
                 }}>
-                  {changing.english}
+                  {hexagramName(changing.hex, lang) || changing.english}
                 </span>
               </div>
             </>
@@ -192,35 +199,42 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
             display: 'flex',
             flexDirection: 'column',
             gap: 12,
-            borderLeft: '2px solid rgba(176,128,48,0.35)',
+            borderLeft: '2px solid rgba(80,180,100,0.35)',
             paddingLeft: 'clamp(14px, 2.5vw, 24px)',
           }}>
-            <p style={{
-              ...cinzel,
-              fontSize: 'clamp(10px, 1.1vw, 12px)',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: '#b08030',
-              marginBottom: 2,
-            }}>Moving lines</p>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+              <p style={{
+                ...cinzel,
+                fontSize: 'clamp(10px, 1.1vw, 12px)',
+                letterSpacing: '0.3em',
+                textTransform: 'uppercase',
+                color: '#7ecf8a',
+              }}>{s.movingLines}</p>
+              <p style={{
+                ...cormorant,
+                fontSize: 'clamp(10px, 1vw, 11px)',
+                color: '#5a8a60',
+                fontStyle: 'italic',
+              }}>{s.wilhelmNote}</p>
+            </div>
             {movingLines.map(l => (
               <div key={l} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 <span style={{
                   ...cinzel,
                   fontSize: 'clamp(10px, 1.1vw, 12px)',
-                  color: '#b08030',
+                  color: '#7ecf8a',
                   letterSpacing: '0.15em',
                 }}>
-                  Line {l}
+                  {s.line(l)}
                 </span>
                 <p style={{
                   ...cormorant,
                   fontSize: 'clamp(15px, 1.7vw, 18px)',
                   lineHeight: 1.65,
-                  color: '#3a3530',
+                  color: '#b0d0b0',
                   fontStyle: 'italic',
                 }}>
-                  {primary.wilhelm_lines[String(l)]?.text}
+                  {texts.lines[String(l)]}
                 </p>
               </div>
             ))}
@@ -231,7 +245,7 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
         <div style={{
           width: '100%',
           height: 1,
-          background: 'linear-gradient(to right, transparent, rgba(176,128,48,0.3), transparent)',
+          background: 'linear-gradient(to right, transparent, rgba(80,180,100,0.25), transparent)',
         }} />
 
         {/* Interpretation */}
@@ -239,9 +253,9 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
           {interpretation ? (
             <div style={{
               ...cormorant,
-              fontSize: 'clamp(17px, 2vw, 21px)',
+              fontSize: 'clamp(18px, 2.1vw, 23px)',
               lineHeight: 1.85,
-              color: '#2a2520',
+              color: '#c8e0c4',
               display: 'flex',
               flexDirection: 'column',
               gap: '1.3em',
@@ -256,10 +270,10 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
               ...cormorant,
               fontSize: 'clamp(15px, 1.7vw, 18px)',
               fontStyle: 'italic',
-              color: '#6b6355',
+              color: '#7aaa80',
               textAlign: 'center',
             }}>
-              The oracle is speaking...
+              {s.oracleSpeaking}
             </p>
           )}
         </div>
@@ -272,44 +286,60 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
             flexDirection: 'column',
             gap: 'clamp(20px, 3vh, 32px)',
             paddingTop: 'clamp(16px, 2.5vh, 28px)',
-            borderTop: '1px solid rgba(44,44,44,0.1)',
+            borderTop: '1px solid rgba(80,180,100,0.12)',
           }}>
             <div>
-              <p style={{
-                ...cinzel,
-                fontSize: 'clamp(10px, 1.1vw, 12px)',
-                letterSpacing: '0.3em',
-                textTransform: 'uppercase',
-                color: '#8a8070',
-                marginBottom: 10,
-              }}>The Judgment</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 10 }}>
+                <p style={{
+                  ...cinzel,
+                  fontSize: 'clamp(10px, 1.1vw, 12px)',
+                  letterSpacing: '0.3em',
+                  textTransform: 'uppercase',
+                  color: '#5a8a60',
+                }}>{s.theJudgment}</p>
+                <p style={{
+                  ...cormorant,
+                  fontSize: 'clamp(10px, 1vw, 11px)',
+                  color: '#5a8a60',
+                  fontStyle: 'italic',
+                  opacity: 0.7,
+                }}>{s.wilhelmNote}</p>
+              </div>
               <p style={{
                 ...cormorant,
                 fontSize: 'clamp(15px, 1.7vw, 18px)',
                 lineHeight: 1.75,
-                color: '#3a3530',
+                color: '#b0d0b0',
                 fontStyle: 'italic',
               }}>
-                {primary.wilhelm_judgment.text}
+                {texts.judgment}
               </p>
             </div>
             <div>
-              <p style={{
-                ...cinzel,
-                fontSize: 'clamp(10px, 1.1vw, 12px)',
-                letterSpacing: '0.3em',
-                textTransform: 'uppercase',
-                color: '#8a8070',
-                marginBottom: 10,
-              }}>The Image</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 10 }}>
+                <p style={{
+                  ...cinzel,
+                  fontSize: 'clamp(10px, 1.1vw, 12px)',
+                  letterSpacing: '0.3em',
+                  textTransform: 'uppercase',
+                  color: '#5a8a60',
+                }}>{s.theImage}</p>
+                <p style={{
+                  ...cormorant,
+                  fontSize: 'clamp(10px, 1vw, 11px)',
+                  color: '#5a8a60',
+                  fontStyle: 'italic',
+                  opacity: 0.7,
+                }}>{s.wilhelmNote}</p>
+              </div>
               <p style={{
                 ...cormorant,
                 fontSize: 'clamp(15px, 1.7vw, 18px)',
                 lineHeight: 1.75,
-                color: '#3a3530',
+                color: '#b0d0b0',
                 fontStyle: 'italic',
               }}>
-                {primary.wilhelm_image.text}
+                {texts.image}
               </p>
             </div>
           </div>
@@ -325,9 +355,9 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
               fontSize: 'clamp(10px, 1.2vw, 13px)',
               letterSpacing: '0.35em',
               textTransform: 'uppercase',
-              color: '#3a3530',
+              color: '#b0d0b0',
               background: 'none',
-              border: '1px solid rgba(44,44,44,0.25)',
+              border: '1px solid rgba(100,200,120,0.3)',
               borderRadius: 2,
               padding: 'clamp(12px, 1.8vw, 16px) clamp(28px, 5vw, 48px)',
               cursor: 'pointer',
@@ -335,15 +365,15 @@ export default function ReadingScreen({ reading, lines, intention, onReset }: Pr
               transition: 'all 0.3s ease',
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.color = '#1a1a1a'
-              e.currentTarget.style.borderColor = 'rgba(44,44,44,0.6)'
+              e.currentTarget.style.color = '#d8e8d4'
+              e.currentTarget.style.borderColor = 'rgba(100,200,120,0.6)'
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.color = '#3a3530'
-              e.currentTarget.style.borderColor = 'rgba(44,44,44,0.25)'
+              e.currentTarget.style.color = '#b0d0b0'
+              e.currentTarget.style.borderColor = 'rgba(100,200,120,0.3)'
             }}
           >
-            Cast again
+            {s.castAgain}
           </button>
         )}
       </div>

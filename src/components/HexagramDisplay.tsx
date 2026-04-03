@@ -31,8 +31,8 @@ export default function HexagramDisplay({ lines, totalLines = 6 }: Props) {
         const revealed = !!castLine
 
         const color = revealed
-          ? isMoving ? '#b08030' : '#2c2c2c'
-          : 'rgba(44,44,44,0.22)'
+          ? isMoving ? '#7ecf8a' : '#c8e0c4'
+          : 'rgba(160,200,165,0.2)'
 
         return (
           <g key={i} className="fade-in" style={{ animationDelay: revealed ? '0ms' : undefined }}>
@@ -57,7 +57,7 @@ export default function HexagramDisplay({ lines, totalLines = 6 }: Props) {
                 x={W + 10}
                 y={y + LINE_H / 2 + 4}
                 fontSize={10}
-                fill="#b08030"
+                fill="#7ecf8a"
                 opacity={0.7}
                 fontFamily="Cormorant Garamond, serif"
               >

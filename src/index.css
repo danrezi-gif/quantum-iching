@@ -2,13 +2,103 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+:root {
+  --bg: #080d09;
+  --text: #d8e8d4;
+  --text-light: #8aab86;
+  --border: rgba(80, 160, 90, 0.25);
+  --overlay: rgba(6, 12, 7, 0.55);
+  --gold: #7ecf8a;
+}
+
 html, body, #root {
   width: 100%;
   height: 100dvh;
   overflow: hidden;
-  background: #faf9f7;
-  color: #2c2c2c;
+  color: var(--text);
   font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+body {
+  background-color: #0a0e0a;
+}
+
+/* Cyberpunk forest layers */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    /* ground mist */
+    radial-gradient(ellipse 120% 30% at 50% 100%, rgba(0, 255, 120, 0.07) 0%, transparent 70%),
+    /* left tree trunk */
+    linear-gradient(to right, rgba(0,0,0,0.9) 0%, transparent 18%),
+    /* right tree trunk */
+    linear-gradient(to left, rgba(0,0,0,0.9) 0%, transparent 18%),
+    /* canopy glow */
+    radial-gradient(ellipse 100% 40% at 50% 0%, rgba(20, 80, 40, 0.5) 0%, transparent 70%),
+    /* deep mid glow — cyan */
+    radial-gradient(ellipse 60% 50% at 50% 45%, rgba(0, 180, 120, 0.06) 0%, transparent 80%),
+    /* base dark */
+    linear-gradient(180deg, #060c08 0%, #0d1a10 40%, #0a1209 70%, #050a06 100%);
+  pointer-events: none;
+}
+
+/* Vertical tree silhouettes via repeating stripes */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,0.55) 0px, rgba(0,0,0,0.55) 3px,
+      transparent 3px, transparent 38px,
+      rgba(0,0,0,0.4) 38px, rgba(0,0,0,0.4) 44px,
+      transparent 44px, transparent 90px,
+      rgba(0,0,0,0.35) 90px, rgba(0,0,0,0.35) 92px,
+      transparent 92px, transparent 140px,
+      rgba(0,0,0,0.5) 140px, rgba(0,0,0,0.5) 148px,
+      transparent 148px, transparent 210px,
+      rgba(0,0,0,0.3) 210px, rgba(0,0,0,0.3) 212px,
+      transparent 212px, transparent 280px,
+      rgba(0,0,0,0.45) 280px, rgba(0,0,0,0.45) 286px,
+      transparent 286px, transparent 360px
+    ),
+    /* horizontal bioluminescent bands — bamboo nodes */
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 80px,
+      rgba(0, 255, 140, 0.025) 80px, rgba(0, 255, 140, 0.025) 82px,
+      transparent 82px, transparent 160px,
+      rgba(0, 200, 100, 0.02) 160px, rgba(0, 200, 100, 0.02) 161px,
+      transparent 161px, transparent 240px
+    );
+  pointer-events: none;
+}
+
+textarea::placeholder {
+  color: #6a9470;
+  opacity: 0.8;
+}
+
+#root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 0;
+  pointer-events: none;
+  backdrop-filter: blur(1px);
+}
+
+#root > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Coin flip animation */

@@ -1,31 +1,35 @@
 import { useState } from 'react'
+import type { Lang } from '../strings'
+import strings from '../strings'
 
 const cinzel = { fontFamily: "'Cinzel', serif" }
 const cormorant = { fontFamily: "'Cormorant Garamond', serif" }
 
 interface Props {
+  lang: Lang
   onReady: (intention: string) => void
 }
 
-export default function IntentionScreen({ onReady }: Props) {
+export default function IntentionScreen({ lang, onReady }: Props) {
   const [intention, setIntention] = useState('')
+  const s = strings[lang]
 
   return (
     <div className="fade-in" style={{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: 'clamp(24px, 4vh, 48px)',
-      padding: 'clamp(24px, 5vw, 64px)',
-      maxWidth: 540,
+      gap: 'clamp(28px, 5vh, 56px)',
+      padding: 'clamp(32px, 6vw, 80px)',
+      maxWidth: 680,
       width: '100%',
       textAlign: 'center',
     }}>
 
       {/* Glyph */}
       <div className="pulse" style={{
-        fontSize: 'clamp(48px, 8vw, 80px)',
-        color: '#7a7060',
+        fontSize: 'clamp(56px, 10vw, 96px)',
+        color: 'rgba(120, 200, 130, 0.5)',
         lineHeight: 1,
         userSelect: 'none',
       }}>
@@ -33,89 +37,78 @@ export default function IntentionScreen({ onReady }: Props) {
       </div>
 
       {/* Title */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         <h1 style={{
           ...cinzel,
-          fontSize: 'clamp(18px, 2.5vw, 28px)',
-          fontWeight: 400,
+          fontSize: 'clamp(22px, 4vw, 44px)',
+          fontWeight: 300,
           letterSpacing: '0.3em',
           textTransform: 'uppercase',
-          color: '#1a1a1a',
+          color: '#d8e8d4',
         }}>
-          Quantum I Ching
+          {s.title}
         </h1>
         <p style={{
           ...cormorant,
-          fontSize: 'clamp(13px, 1.4vw, 16px)',
-          letterSpacing: '0.2em',
-          textTransform: 'uppercase',
-          color: '#6b6355',
+          fontSize: 'clamp(14px, 1.6vw, 18px)',
+          letterSpacing: '0.15em',
+          fontStyle: 'italic',
+          color: '#8aab86',
         }}>
-          Book of Changes
+          {s.subtitle}
         </p>
       </div>
 
-      {/* Instruction */}
-      <p style={{
-        ...cormorant,
-        fontSize: 'clamp(17px, 2vw, 22px)',
-        lineHeight: 1.7,
-        color: '#4a4540',
-        fontStyle: 'italic',
-      }}>
-        Focus on a question or an intention.
-      </p>
-
-      {/* Optional text input */}
+      {/* Intention input */}
       <textarea
         value={intention}
         onChange={e => setIntention(e.target.value)}
-        placeholder="You may write your question here, or hold it silently..."
+        placeholder={s.intentionPlaceholder}
         rows={3}
         style={{
           ...cormorant,
           width: '100%',
-          fontSize: 'clamp(15px, 1.8vw, 18px)',
+          fontSize: 'clamp(17px, 2vw, 21px)',
           lineHeight: 1.7,
-          color: '#1a1a1a',
-          background: 'rgba(255,255,255,0.6)',
-          backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(44,44,44,0.2)',
-          borderRadius: 4,
-          padding: 'clamp(12px, 2vw, 20px)',
+          color: '#d8e8d4',
+          background: 'rgba(0, 20, 5, 0.45)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(80, 160, 90, 0.3)',
+          borderRadius: 6,
+          padding: 'clamp(14px, 2vw, 22px)',
           resize: 'none',
           outline: 'none',
         }}
       />
 
-      {/* Cast button */}
+      {/* Begin button */}
       <button
         onClick={() => onReady(intention.trim())}
         style={{
           ...cinzel,
-          fontSize: 'clamp(12px, 1.4vw, 15px)',
-          letterSpacing: '0.3em',
+          fontSize: 'clamp(12px, 1.4vw, 14px)',
+          letterSpacing: '0.35em',
           textTransform: 'uppercase',
-          color: '#3a3530',
+          color: '#d8e8d4',
           background: 'none',
-          border: '1px solid rgba(44,44,44,0.35)',
+          border: '1px solid rgba(80, 160, 90, 0.4)',
           borderRadius: 2,
-          padding: 'clamp(10px, 1.5vw, 14px) clamp(24px, 4vw, 40px)',
+          padding: 'clamp(12px, 1.8vw, 16px) clamp(32px, 5vw, 56px)',
           cursor: 'pointer',
           transition: 'all 0.3s ease',
         }}
         onMouseEnter={e => {
           const b = e.currentTarget
-          b.style.color = '#1a1a1a'
-          b.style.borderColor = 'rgba(44,44,44,0.7)'
+          b.style.borderColor = 'rgba(100, 220, 120, 0.7)'
+          b.style.color = '#a8e8b0'
         }}
         onMouseLeave={e => {
           const b = e.currentTarget
-          b.style.color = '#3a3530'
-          b.style.borderColor = 'rgba(44,44,44,0.35)'
+          b.style.borderColor = 'rgba(80, 160, 90, 0.4)'
+          b.style.color = '#d8e8d4'
         }}
       >
-        I am ready
+        {s.beginButton}
       </button>
     </div>
   )

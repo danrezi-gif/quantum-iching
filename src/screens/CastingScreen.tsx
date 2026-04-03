@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import type { CastLine } from '../types'
+import type { Lang } from '../strings'
+import strings from '../strings'
 import { coinsToLineValue } from '../iching'
 import CoinFlip from '../components/CoinFlip'
 import HexagramDisplay from '../components/HexagramDisplay'
@@ -8,6 +10,7 @@ const cinzel = { fontFamily: "'Cinzel', serif" }
 const cormorant = { fontFamily: "'Cormorant Garamond', serif" }
 
 interface Props {
+  lang: Lang
   lines: CastLine[]
   onLineCast: (line: CastLine) => void
   onComplete: () => void
@@ -15,15 +18,8 @@ interface Props {
 
 type CastState = 'idle' | 'fetching' | 'animating' | 'done'
 
-const LINE_NAMES = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth']
-const LINE_LABELS: Record<number, string> = {
-  6: 'old yin ──×──',
-  7: 'young yang ────',
-  8: 'young yin ── ──',
-  9: 'old yang ────○',
-}
-
-export default function CastingScreen({ lines, onLineCast, onComplete }: Props) {
+export default function CastingScreen({ lang, lines, onLineCast, onComplete }: Props) {
+  const s = strings[lang]
   const [castState, setCastState] = useState<CastState>('idle')
   const [currentCoins, setCurrentCoins] = useState<[number, number, number] | null>(null)
   const [coinsReady, setCoinsReady] = useState(0)
@@ -94,9 +90,9 @@ export default function CastingScreen({ lines, onLineCast, onComplete }: Props) 
         fontSize: 'clamp(11px, 1.2vw, 14px)',
         letterSpacing: '0.3em',
         textTransform: 'uppercase',
-        color: '#4a4540',
+        color: '#a0c4a0',
       }}>
-        {isComplete ? 'Hexagram complete' : `${LINE_NAMES[currentLineIndex]} line`}
+        {isComplete ? s.hexagramComplete : s.lineLabel(s.lineNames[currentLineIndex])}
       </p>
 
       {/* Hexagram building */}
@@ -109,11 +105,11 @@ export default function CastingScreen({ lines, onLineCast, onComplete }: Props) 
         <p className="fade-in" style={{
           ...cormorant,
           fontSize: 'clamp(14px, 1.6vw, 17px)',
-          color: '#3a3530',
+          color: '#d8e8d4',
           fontStyle: 'italic',
           letterSpacing: '0.05em',
         }}>
-          {LINE_LABELS[lastLine.value]}
+          {s.lineValues[lastLine.value]}
         </p>
       )}
 
@@ -143,10 +139,10 @@ export default function CastingScreen({ lines, onLineCast, onComplete }: Props) 
         <p className="pulse" style={{
           ...cormorant,
           fontSize: 'clamp(14px, 1.6vw, 17px)',
-          color: '#4a4540',
+          color: '#8aab86',
           fontStyle: 'italic',
         }}>
-          Consulting the quantum...
+          {s.consultingQuantum}
         </p>
       )}
 
@@ -164,16 +160,16 @@ export default function CastingScreen({ lines, onLineCast, onComplete }: Props) 
             fontSize: 'clamp(11px, 1.3vw, 14px)',
             letterSpacing: '0.3em',
             textTransform: 'uppercase',
-            color: castState !== 'idle' ? '#5a5550' : '#3a3530',
+            color: castState !== 'idle' ? '#4a7a50' : '#d8e8d4',
             background: 'none',
-            border: `1px solid ${castState !== 'idle' ? 'rgba(44,44,44,0.1)' : 'rgba(44,44,44,0.2)'}`,
+            border: `1px solid ${castState !== 'idle' ? 'rgba(80,160,90,0.15)' : 'rgba(80,160,90,0.4)'}`,
             borderRadius: 2,
             padding: 'clamp(10px, 1.5vw, 14px) clamp(24px, 4vw, 40px)',
             cursor: castState !== 'idle' ? 'default' : 'pointer',
             transition: 'all 0.3s ease',
           }}
         >
-          Cast line {currentLineIndex + 1}
+          {s.castLine(currentLineIndex + 1)}
         </button>
       ) : (
         <button
@@ -184,16 +180,16 @@ export default function CastingScreen({ lines, onLineCast, onComplete }: Props) 
             fontSize: 'clamp(11px, 1.3vw, 14px)',
             letterSpacing: '0.3em',
             textTransform: 'uppercase',
-            color: '#4a4540',
+            color: '#d8e8d4',
             background: 'none',
-            border: '1px solid #4a4540',
+            border: '1px solid rgba(80,160,90,0.4)',
             borderRadius: 2,
             padding: 'clamp(10px, 1.5vw, 14px) clamp(24px, 4vw, 40px)',
             cursor: 'pointer',
             transition: 'all 0.3s ease',
           }}
         >
-          Reveal reading
+          {s.revealReading}
         </button>
       )}
     </div>

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import type { AppScreen, CastLine } from './types'
+import type { Lang } from './strings'
+import strings, { detectLang } from './strings'
 import { castToHexagram } from './iching'
 import IntentionScreen from './screens/IntentionScreen'
 import CastingScreen from './screens/CastingScreen'
@@ -13,6 +15,8 @@ export default function App() {
   const [intention, setIntention] = useState('')
   const [lines, setLines] = useState<CastLine[]>([])
   const [infoOpen, setInfoOpen] = useState(false)
+  const [lang, setLang] = useState<Lang>(detectLang)
+  const s = strings[lang]
 
   function handleIntentionReady(text: string) {
     setIntention(text)
@@ -40,7 +44,6 @@ export default function App() {
     <div style={{
       width: '100%',
       height: '100dvh',
-      background: '#faf9f7',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -49,10 +52,11 @@ export default function App() {
       position: 'relative',
     }}>
       {screen === 'intention' && (
-        <IntentionScreen onReady={handleIntentionReady} />
+        <IntentionScreen lang={lang} onReady={handleIntentionReady} />
       )}
       {screen === 'casting' && (
         <CastingScreen
+          lang={lang}
           lines={lines}
           onLineCast={handleLineCast}
           onComplete={handleCastingComplete}
@@ -60,6 +64,7 @@ export default function App() {
       )}
       {screen === 'reading' && reading && (
         <ReadingScreen
+          lang={lang}
           reading={reading}
           lines={lines}
           intention={intention}
@@ -67,40 +72,77 @@ export default function App() {
         />
       )}
 
-      {/* Info button — fixed bottom-right */}
-      <button
-        onClick={() => setInfoOpen(true)}
-        title="About this oracle"
-        style={{
-          position: 'fixed',
-          bottom: 'clamp(16px, 3vh, 28px)',
-          right: 'clamp(16px, 3vw, 28px)',
-          width: 36,
-          height: 36,
-          borderRadius: '50%',
-          background: 'none',
-          border: '1px solid rgba(44,44,44,0.2)',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          ...cinzel,
-          fontSize: 14,
-          color: 'rgba(44,44,44,0.4)',
-          transition: 'all 0.3s ease',
-          zIndex: 40,
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.color = '#3a3530'
-          e.currentTarget.style.borderColor = 'rgba(44,44,44,0.5)'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.color = 'rgba(44,44,44,0.4)'
-          e.currentTarget.style.borderColor = 'rgba(44,44,44,0.2)'
-        }}
-      >
-        ⓘ
-      </button>
+      {/* Bottom-right controls: lang toggle + info */}
+      <div style={{
+        position: 'fixed',
+        bottom: 'clamp(16px, 3vh, 28px)',
+        right: 'clamp(16px, 3vw, 28px)',
+        display: 'flex',
+        gap: 8,
+        alignItems: 'center',
+        zIndex: 40,
+      }}>
+        {/* Lang toggle */}
+        <button
+          onClick={() => setLang(l => l === 'en' ? 'pt' : 'en')}
+          title="Switch language"
+          style={{
+            ...cinzel,
+            fontSize: 11,
+            letterSpacing: '0.15em',
+            color: 'rgba(180, 220, 185, 0.8)',
+            background: 'none',
+            border: '1px solid rgba(80, 160, 90, 0.4)',
+            borderRadius: 2,
+            padding: '0 10px',
+            height: 36,
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.color = '#a8e8b0'
+            e.currentTarget.style.borderColor = 'rgba(100,220,120,0.7)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = 'rgba(180,220,185,0.8)'
+            e.currentTarget.style.borderColor = 'rgba(80,160,90,0.4)'
+          }}
+        >
+          {lang === 'en' ? 'PT' : 'EN'}
+        </button>
+
+        {/* Info button */}
+        <button
+          onClick={() => setInfoOpen(true)}
+          title={s.aboutTitle}
+          style={{
+            position: 'relative',
+            width: 36,
+            height: 36,
+            borderRadius: '50%',
+            background: 'none',
+            border: '1px solid rgba(80, 160, 90, 0.4)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...cinzel,
+            fontSize: 14,
+            color: 'rgba(180, 220, 185, 0.8)',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.color = '#a8e8b0'
+            e.currentTarget.style.borderColor = 'rgba(100,220,120,0.7)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = 'rgba(180,220,185,0.8)'
+            e.currentTarget.style.borderColor = 'rgba(80,160,90,0.4)'
+          }}
+        >
+          ⓘ
+        </button>
+      </div>
 
       {/* Info overlay */}
       {infoOpen && (
@@ -108,7 +150,7 @@ export default function App() {
           style={{
             position: 'fixed',
             inset: 0,
-            background: 'rgba(250,249,247,0.92)',
+            background: 'rgba(6,14,8,0.92)',
             backdropFilter: 'blur(16px)',
             zIndex: 50,
             display: 'flex',
@@ -124,7 +166,7 @@ export default function App() {
               maxWidth: 640,
               width: '100%',
               ...cormorant,
-              color: '#2a2520',
+              color: '#c8e0c4',
             }}
             onClick={e => e.stopPropagation()}
           >
@@ -140,10 +182,10 @@ export default function App() {
                 fontSize: 'clamp(13px, 1.6vw, 17px)',
                 letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: '#6b6355',
+                color: '#7aaa80',
                 fontWeight: 400,
               }}>
-                About this oracle
+                {s.aboutTitle}
               </h2>
               <button
                 onClick={() => setInfoOpen(false)}
@@ -153,7 +195,7 @@ export default function App() {
                   cursor: 'pointer',
                   fontSize: 'clamp(24px, 3vw, 32px)',
                   lineHeight: 1,
-                  color: 'rgba(44,44,44,0.35)',
+                  color: 'rgba(140,210,150,0.5)',
                   padding: '4px 8px',
                 }}
               >×</button>
@@ -164,25 +206,19 @@ export default function App() {
               fontSize: 'clamp(16px, 1.9vw, 20px)',
               lineHeight: 1.8,
               marginBottom: 'clamp(16px, 2.5vh, 28px)',
-              color: '#2a2520',
+              color: '#c8e0c4',
             }}>
-              Quantum I Ching uses the traditional three-coin method of divination, but replaces
-              physical coins with quantum randomness sourced from photon detection hardware at the
-              LfD Laboratory in Germany (ID Quantique). Each coin flip is derived from a single
-              bit of a genuine quantum random number — not a mathematical simulation.
+              {s.aboutP1}
             </p>
 
             <p style={{
               fontSize: 'clamp(15px, 1.7vw, 18px)',
               lineHeight: 1.8,
               marginBottom: 'clamp(24px, 4vh, 44px)',
-              color: '#4a4540',
+              color: '#a0c4a0',
               fontStyle: 'italic',
             }}>
-              Three coins are cast per line, six lines build the hexagram from the bottom up.
-              A coin summing to 6 or 9 becomes a moving line — the seed of transformation — and
-              generates a second, changing hexagram. The interpretation draws on the Richard Wilhelm
-              translation of the I Ching (1950), the canonical Western edition.
+              {s.aboutP2}
             </p>
 
             {/* How it works */}
@@ -192,17 +228,12 @@ export default function App() {
                 fontSize: 'clamp(10px, 1.2vw, 13px)',
                 letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: '#8a8070',
+                color: '#5a8a60',
                 marginBottom: 'clamp(12px, 2vh, 20px)',
               }}>
-                The coin method
+                {s.coinMethodTitle}
               </h3>
-              {[
-                ['6 — old yin ──×──', 'Three tails. A moving line — yin transforming into yang.'],
-                ['7 — young yang ────', 'Two tails, one heads. Stable yang line.'],
-                ['8 — young yin ── ──', 'One tails, two heads. Stable yin line.'],
-                ['9 — old yang ────○', 'Three heads. A moving line — yang transforming into yin.'],
-              ].map(([label, desc]) => (
+              {s.coinMethod.map(([label, desc]) => (
                 <div key={label} style={{
                   display: 'flex',
                   gap: 'clamp(12px, 2vw, 20px)',
@@ -213,14 +244,14 @@ export default function App() {
                   <span style={{
                     ...cinzel,
                     fontSize: 'clamp(11px, 1.2vw, 13px)',
-                    color: '#b08030',
+                    color: '#7ecf8a',
                     minWidth: 'clamp(120px, 16vw, 160px)',
                     flexShrink: 0,
                     paddingTop: 2,
                   }}>{label}</span>
                   <span style={{
                     fontSize: 'clamp(14px, 1.6vw, 17px)',
-                    color: '#4a4540',
+                    color: '#a0c4a0',
                     lineHeight: 1.6,
                   }}>{desc}</span>
                 </div>
@@ -234,10 +265,10 @@ export default function App() {
                 fontSize: 'clamp(10px, 1.2vw, 13px)',
                 letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: '#8a8070',
+                color: '#5a8a60',
                 marginBottom: 'clamp(10px, 1.5vh, 16px)',
               }}>
-                Sources
+                {s.sourcesTitle}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <a
@@ -246,12 +277,12 @@ export default function App() {
                   rel="noopener noreferrer"
                   style={{
                     fontSize: 'clamp(14px, 1.6vw, 17px)',
-                    color: '#7a6845',
+                    color: '#7ecf8a',
                     textDecoration: 'none',
                     lineHeight: 1.6,
                   }}
                 >
-                  LfD Laboratory — Quantum Random Number Generation (ID Quantique hardware)
+                  {s.sourceLfD}
                 </a>
                 <a
                   href="https://www.iging.com/intro/introduc.htm"
@@ -259,12 +290,12 @@ export default function App() {
                   rel="noopener noreferrer"
                   style={{
                     fontSize: 'clamp(14px, 1.6vw, 17px)',
-                    color: '#7a6845',
+                    color: '#7ecf8a',
                     textDecoration: 'none',
                     lineHeight: 1.6,
                   }}
                 >
-                  Richard Wilhelm — I Ching or Book of Changes (1950)
+                  {s.sourceWilhelm}
                 </a>
               </div>
             </div>

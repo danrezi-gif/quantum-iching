@@ -1,21 +1,44 @@
 import type { CastLine, Hexagram, LineValue } from './types'
 // @ts-ignore
 import wilhelmRaw from './data/wilhelm_raw.js'
+// @ts-ignore
+import wilhelmPt from './data/wilhelm_pt.js'
 
 const wilhelm: Record<string, Hexagram> = wilhelmRaw
 
-// Full King Wen lookup table (above trigram, below trigram) → hexagram number
-// Using the standard binary encoding
+export interface HexTexts {
+  judgment: string
+  image: string
+  lines: Record<string, string>
+}
+
+export function getTexts(hexNum: number, lang: string): HexTexts {
+  const src = lang === 'pt' ? wilhelmPt : wilhelmRaw
+  const h = src[String(hexNum)]
+  if (lang === 'pt') return h as HexTexts
+  return {
+    judgment: h.wilhelm_judgment.text,
+    image: h.wilhelm_image.text,
+    lines: Object.fromEntries(
+      Object.entries(h.wilhelm_lines as Record<string, { text: string }>)
+        .map(([k, v]) => [k, v.text])
+    ),
+  }
+}
+
+// King Wen lookup table: KW_TABLE[aboveIdx][belowIdx] → hexagram number
+// Indices match trigramIndex() binary encoding:
+//   0=KUN 1=CHEN 2=KAN 3=TUI 4=KEN 5=LI 6=SUN 7=CHIEN
 const KW_TABLE: number[][] = [
-  //       below: KUN CHN KAN KEN SUN  LI TUI CHN
-  /* KUN */ [  2, 24,  7, 15, 46, 36, 19, 11],
-  /* CHN */ [ 16, 51,  3, 27, 32, 21, 17, 34],
-  /* KAN */ [  8,  3, 29,  4, 48, 63, 60, 5 ],
-  /* KEN */ [ 23, 27,  4, 52, 18, 22, 41, 26],
-  /* SUN */ [ 20, 42, 59, 53, 57, 37, 61,  9],
-  /* LI  */ [ 35, 21, 64, 56, 50, 30, 38, 13],
-  /* TUI */ [ 45, 17, 47, 31, 28, 49, 58, 43],
-  /* CHN */ [ 12, 25,  6, 33, 44, 14, 10,  1],
+  //        below: KUN CHN KAN TUI KEN  LI SUN CHN
+  /* KUN  */ [  2, 24,  7, 19, 15, 36, 46, 11],
+  /* CHEN */ [ 16, 51, 40, 54, 62, 55, 32, 34],
+  /* KAN  */ [  8,  3, 29, 60, 39, 63, 48,  5],
+  /* TUI  */ [ 45, 17, 47, 58, 31, 49, 28, 43],
+  /* KEN  */ [ 23, 27,  4, 41, 52, 22, 18, 26],
+  /* LI   */ [ 35, 21, 64, 38, 56, 30, 50, 14],
+  /* SUN  */ [ 20, 42, 59, 61, 53, 37, 57,  9],
+  /* CHIEN*/ [ 12, 25,  6, 10, 33, 13, 44,  1],
 ]
 
 // Convert 6 line values to trigram indices (bottom-to-top)

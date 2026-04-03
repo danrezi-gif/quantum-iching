@@ -37,11 +37,25 @@ app.get('/api/qrng', async (req, res) => {
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
 app.post('/api/reading', async (req, res) => {
-  const { hexagram, changingHexagram, movingLines, intention, wilhelmData } = req.body
+  const { lang, hexagram, changingHexagram, movingLines, intention, wilhelmData } = req.body
+  const isPt = lang === 'pt'
 
-  const systemPrompt = `You are a guide for the I Ching — the Book of Changes. You interpret hexagrams with depth, nuance, and psychological insight, drawing on the Richard Wilhelm translation as your primary source. Speak directly to the person, in the present moment. Do not recite the text — reflect on it. Be poetic but grounded. Keep your response to 3-4 paragraphs. Write in plain prose only — no markdown, no headers, no bullet points, no asterisks for emphasis.`
+  const systemPrompt = isPt
+    ? `Você é um guia do I Ching — o Livro das Mutações. Você interpreta hexagramas com profundidade, nuance e perspicácia psicológica, tendo a tradução de Richard Wilhelm como fonte primária. Fale diretamente com a pessoa, no momento presente. Não recite o texto — reflita sobre ele. Seja poético mas fundamentado. Mantenha sua resposta em 3-4 parágrafos. Escreva apenas em prosa simples — sem markdown, sem cabeçalhos, sem marcadores, sem asteriscos para ênfase.`
+    : `You are a guide for the I Ching — the Book of Changes. You interpret hexagrams with depth, nuance, and psychological insight, drawing on the Richard Wilhelm translation as your primary source. Speak directly to the person, in the present moment. Do not recite the text — reflect on it. Be poetic but grounded. Keep your response to 3-4 paragraphs. Write in plain prose only — no markdown, no headers, no bullet points, no asterisks for emphasis.`
 
-  const userMessage = `The user cast hexagram ${hexagram.number ?? hexagram.hex}: ${hexagram.english} (${hexagram.trad_chinese} — ${hexagram.pinyin}).
+  const userMessage = isPt
+    ? `O usuário lançou o hexagrama ${hexagram.number ?? hexagram.hex}: ${hexagram.english} (${hexagram.trad_chinese} — ${hexagram.pinyin}).
+${intention ? `A intenção ou pergunta: "${intention}"` : 'Lançou com intenção silenciosa.'}
+
+Julgamento de Wilhelm: ${wilhelmData.judgment}
+Imagem de Wilhelm: ${wilhelmData.image}
+${movingLines.length > 0 ? `Linhas em movimento: ${movingLines.map((l: number) => `Linha ${l}`).join(', ')}
+Textos das linhas em movimento: ${movingLines.map((l: number) => `Linha ${l}: ${wilhelmData.lines[l]}`).join('\n')}` : 'Nenhuma linha em movimento.'}
+${changingHexagram ? `O hexagrama em mudança é o ${changingHexagram.number ?? changingHexagram.hex}: ${changingHexagram.english}.` : ''}
+
+Ofereça uma interpretação viva desta leitura.`
+    : `The user cast hexagram ${hexagram.number ?? hexagram.hex}: ${hexagram.english} (${hexagram.trad_chinese} — ${hexagram.pinyin}).
 ${intention ? `Their intention or question: "${intention}"` : 'They cast with silent intention.'}
 
 Wilhelm's Judgment: ${wilhelmData.judgment}
