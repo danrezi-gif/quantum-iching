@@ -82,6 +82,41 @@ export default function App() {
         alignItems: 'center',
         zIndex: 40,
       }}>
+        {/* Ko-fi */}
+        <a
+          href="https://ko-fi.com/monkadelic"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Support on Ko-fi"
+          style={{
+            ...cinzel,
+            fontSize: 11,
+            letterSpacing: '0.1em',
+            color: 'rgba(180, 220, 185, 0.8)',
+            background: 'none',
+            border: '1px solid rgba(80, 160, 90, 0.4)',
+            borderRadius: 2,
+            padding: '0 10px',
+            height: 36,
+            cursor: 'pointer',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.color = '#a8e8b0'
+            e.currentTarget.style.borderColor = 'rgba(100,220,120,0.7)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = 'rgba(180,220,185,0.8)'
+            e.currentTarget.style.borderColor = 'rgba(80,160,90,0.4)'
+          }}
+        >
+          <span>☕</span>
+        </a>
+
         {/* Lang toggle */}
         <button
           onClick={() => setLang(l => l === 'en' ? 'pt' : 'en')}
