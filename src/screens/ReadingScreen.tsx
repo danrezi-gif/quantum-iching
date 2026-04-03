@@ -8,6 +8,12 @@ import HexagramDisplay from '../components/HexagramDisplay'
 const cinzel = { fontFamily: "'Cinzel', serif" }
 const cormorant = { fontFamily: "'Cormorant Garamond', serif" }
 
+// Insert a line break after the all-caps title at the start of a judgment text
+// e.g. "ENTUSIASMO. É favorável..." → "ENTUSIASMO.\nÉ favorável..."
+function breakAfterTitle(text: string): string {
+  return text.replace(/^([A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞŒ\s]+[.,])\s+/, '$1\n')
+}
+
 interface Props {
   lang: Lang
   reading: { primary: Hexagram; changing: Hexagram | null; movingLines: number[] }
@@ -199,10 +205,9 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
             display: 'flex',
             flexDirection: 'column',
             gap: 12,
-            borderLeft: '2px solid rgba(80,180,100,0.35)',
-            paddingLeft: 'clamp(14px, 2.5vw, 24px)',
+            textAlign: 'center',
           }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 12 }}>
               <p style={{
                 ...cinzel,
                 fontSize: 'clamp(10px, 1.1vw, 12px)',
@@ -289,8 +294,8 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
             paddingTop: 'clamp(16px, 2.5vh, 28px)',
             borderTop: '1px solid rgba(80,180,100,0.12)',
           }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 10 }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 12, marginBottom: 10 }}>
                 <p style={{
                   ...cinzel,
                   fontSize: 'clamp(10px, 1.1vw, 12px)',
@@ -314,11 +319,11 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
                 fontStyle: 'italic',
                 whiteSpace: 'pre-line',
               }}>
-                {texts.judgment}
+                {breakAfterTitle(texts.judgment)}
               </p>
             </div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 10 }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 12, marginBottom: 10 }}>
                 <p style={{
                   ...cinzel,
                   fontSize: 'clamp(10px, 1.1vw, 12px)',
