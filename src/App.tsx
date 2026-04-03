@@ -285,7 +285,7 @@ export default function App() {
                   {s.sourceLfD}
                 </a>
                 <a
-                  href="https://www.iging.com/intro/introduc.htm"
+                  href="https://archive.org/details/ichingorbookof00bayn"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{

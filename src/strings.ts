@@ -5,7 +5,7 @@ const strings = {
     // IntentionScreen
     title: 'Quantum I Ching',
     subtitle: 'A quantum oracle',
-    intentionPlaceholder: 'Hold your question in mind',
+    intentionPlaceholder: 'Think of a question',
     beginButton: 'Begin',
 
     // CastingScreen
@@ -55,7 +55,7 @@ const strings = {
     // IntentionScreen
     title: 'I Ching Quântico',
     subtitle: 'Um oráculo quântico',
-    intentionPlaceholder: 'Mantenha sua pergunta em mente',
+    intentionPlaceholder: 'Pense numa pergunta',
     beginButton: 'Começar',
 
     // CastingScreen
