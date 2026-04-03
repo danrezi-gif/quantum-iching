@@ -303,13 +303,6 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
                   textTransform: 'uppercase',
                   color: '#5a8a60',
                 }}>{s.theJudgment}</p>
-                <p style={{
-                  ...cormorant,
-                  fontSize: 'clamp(10px, 1vw, 11px)',
-                  color: '#5a8a60',
-                  fontStyle: 'italic',
-                  opacity: 0.7,
-                }}>{s.wilhelmNote}</p>
               </div>
               <p style={{
                 ...cormorant,
@@ -331,13 +324,6 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
                   textTransform: 'uppercase',
                   color: '#5a8a60',
                 }}>{s.theImage}</p>
-                <p style={{
-                  ...cormorant,
-                  fontSize: 'clamp(10px, 1vw, 11px)',
-                  color: '#5a8a60',
-                  fontStyle: 'italic',
-                  opacity: 0.7,
-                }}>{s.wilhelmNote}</p>
               </div>
               <p style={{
                 ...cormorant,
