@@ -1,73 +1,63 @@
-# React + TypeScript + Vite
+# Quantum I Ching
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An I Ching divination app that uses hardware quantum random number generation for coin casting, and a Claude-powered interpretation layer. Available in English and Portuguese.
 
-Currently, two official plugins are available:
+Live: [iching.monkadelic.me](https://iching.monkadelic.me)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How it works
 
-## React Compiler
+1. **Intention** — the user optionally enters a question or focus
+2. **Casting** — six lines are cast one at a time using coins whose values come from a hardware QRNG ([LfD/ID Quantique](https://lfdr.de/qrng_api/))
+3. **Reading** — the resulting hexagram is identified via King Wen lookup, moving lines are noted, and an interpretation is streamed from Claude using the Wilhelm translation as source material
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Each coin flip fetches 3 random bits from a physical quantum entropy source (photon detection). The LSB of each byte is used as the coin value.
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 + TypeScript + Vite
+- Tailwind CSS v4
+- Express server (API proxy + SSE streaming)
+- Anthropic SDK (claude-sonnet-4-6, streaming)
+- QRNG: LfD API (ID Quantique hardware)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Hexagram data
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- English: Richard Wilhelm translation (`wilhelm_raw.js`)
+- Portuguese: Claude-translated from Wilhelm (`wilhelm_pt.js`), generated via `src/data/generate_pt.mjs`
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Setup
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create a `.env` file:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+ANTHROPIC_API_KEY=your_key_here
+```
+
+## Development
+
+```bash
+npm run dev
+```
+
+Runs the Express server (port 5002) and Vite dev server (port 5173) concurrently.
+
+## Production build
+
+```bash
+npm run build
+npm run server
+```
+
+The Express server serves the built frontend from `dist/public/` and handles `/api/qrng` and `/api/reading` endpoints.
+
+## Regenerating Portuguese texts
+
+```bash
+node src/data/generate_pt.mjs
+```
+
+Translates all 64 hexagrams (judgment, image, line texts) from English to Brazilian Portuguese in batches of 8, writing to `src/data/wilhelm_pt.js`. Requires `ANTHROPIC_API_KEY`.
