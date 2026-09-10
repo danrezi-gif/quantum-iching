@@ -1,63 +1,65 @@
 # Quantum I Ching
 
-An I Ching divination app that uses hardware quantum random number generation for coin casting, and a Claude-powered interpretation layer. Available in English and Portuguese.
+**An interactive oracle bringing an ancient symbolic system into dialogue with quantum randomness and AI interpretation.**
 
-Live: [iching.monkadelic.me](https://iching.monkadelic.me)
+Quantum I Ching preserves the traditional six-line casting structure of the *I Ching*, but replaces physical coins with bits from a hardware quantum random-number source. The resulting hexagram and moving lines are then interpreted through an AI layer grounded in the Wilhelm translation.
 
-## How it works
+The project is less interested in claiming that quantum randomness is spiritually privileged than in the experience created when **question, chance, symbol and interpretation** meet inside a contemporary computational system.
 
-1. **Intention** — the user optionally enters a question or focus
-2. **Casting** — six lines are cast one at a time using coins whose values come from a hardware QRNG ([LfD/ID Quantique](https://lfdr.de/qrng_api/))
-3. **Reading** — the resulting hexagram is identified via King Wen lookup, moving lines are noted, and an interpretation is streamed from Claude using the Wilhelm translation as source material
+**Live:** https://iching.monkadelic.me
 
-Each coin flip fetches 3 random bits from a physical quantum entropy source (photon detection). The LSB of each byte is used as the coin value.
+Available in English and Portuguese.
+
+## The experience
+
+1. **Intention** — enter a question or simply begin without one.
+2. **Casting** — six lines are generated sequentially from hardware quantum randomness.
+3. **Hexagram** — the resulting figure is identified through the King Wen sequence, including moving lines when present.
+4. **Reading** — an AI interpretation is generated using the Wilhelm text as its primary symbolic source.
+
+The result is not presented as prediction or proof of synchronicity. It is an experiment in what happens when an old divinatory form is mediated by contemporary computation.
+
+## How the casting works
+
+Each virtual coin draws bits from the [LfD / ID Quantique QRNG](https://lfdr.de/qrng_api/), a physical entropy source based on photon detection. Three binary values form each traditional coin cast.
 
 ## Stack
 
 - React 19 + TypeScript + Vite
 - Tailwind CSS v4
-- Express server (API proxy + SSE streaming)
-- Anthropic SDK (claude-sonnet-4-6, streaming)
-- QRNG: LfD API (ID Quantique hardware)
+- Express server with SSE streaming
+- Anthropic SDK for the interpretation layer
+- LfD / ID Quantique hardware QRNG
 
-## Hexagram data
+## Hexagram texts
 
-- English: Richard Wilhelm translation (`wilhelm_raw.js`)
-- Portuguese: Claude-translated from Wilhelm (`wilhelm_pt.js`), generated via `src/data/generate_pt.mjs`
+- **English:** Richard Wilhelm translation
+- **Portuguese:** project translation derived from the English source with AI assistance
 
-## Setup
-
-```bash
-npm install
-```
-
-Create a `.env` file:
-
-```
-ANTHROPIC_API_KEY=your_key_here
-```
+The interface distinguishes source texts from generated interpretation.
 
 ## Development
 
 ```bash
+npm install
 npm run dev
 ```
 
-Runs the Express server (port 5002) and Vite dev server (port 5173) concurrently.
+For the interpretation layer, create a `.env` file containing:
 
-## Production build
+```bash
+ANTHROPIC_API_KEY=your_key_here
+```
+
+Production:
 
 ```bash
 npm run build
 npm run server
 ```
 
-The Express server serves the built frontend from `dist/public/` and handles `/api/qrng` and `/api/reading` endpoints.
+The Express server serves the built frontend and proxies the QRNG and interpretation requests.
 
-## Regenerating Portuguese texts
+## Context
 
-```bash
-node src/data/generate_pt.mjs
-```
-
-Translates all 64 hexagrams (judgment, image, line texts) from English to Brazilian Portuguese in batches of 8, writing to `src/data/wilhelm_pt.js`. Requires `ANTHROPIC_API_KEY`.
+Quantum I Ching is part of [Monkadelic](https://monkadelic.me), Daniel Rezinovsky's experimental practice across consciousness, symbolic systems, immersive media and artificial intelligence.
