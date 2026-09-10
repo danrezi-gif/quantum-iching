@@ -2,11 +2,13 @@
 
 **An interactive oracle bringing an ancient symbolic system into dialogue with quantum randomness and AI interpretation.**
 
+[Open the oracle](https://iching.monkadelic.me)
+
+![Quantum I Ching](public/zen-background.png)
+
 Quantum I Ching preserves the traditional six-line casting structure of the *I Ching*, but replaces physical coins with bits from a hardware quantum random-number source. The resulting hexagram and moving lines are then interpreted through an AI layer grounded in the Wilhelm translation.
 
 The project is less interested in claiming that quantum randomness is spiritually privileged than in the experience created when **question, chance, symbol and interpretation** meet inside a contemporary computational system.
-
-**Live:** https://iching.monkadelic.me
 
 Available in English and Portuguese.
 
