@@ -1,0 +1,514 @@
+[
+  {
+    "hex": 1,
+    "hex_font": "䷀",
+    "trad_chinese": "乾",
+    "pinyin": "Qián",
+    "english": "The Creative",
+    "binary": "111111"
+  },
+  {
+    "hex": 2,
+    "hex_font": "䷁",
+    "trad_chinese": "坤",
+    "pinyin": "Kūn",
+    "english": "The Receptive",
+    "binary": "000000"
+  },
+  {
+    "hex": 3,
+    "hex_font": "䷂",
+    "trad_chinese": "屯",
+    "pinyin": "Zhūn",
+    "english": "Difficulty at the Beginning",
+    "binary": "100010"
+  },
+  {
+    "hex": 4,
+    "hex_font": "䷃",
+    "trad_chinese": "蒙",
+    "pinyin": "Méng",
+    "english": "Youthful Folly",
+    "binary": "010001"
+  },
+  {
+    "hex": 5,
+    "hex_font": "䷄",
+    "trad_chinese": "需",
+    "pinyin": "Xū",
+    "english": "Waiting (Nourishment)",
+    "binary": "111010"
+  },
+  {
+    "hex": 6,
+    "hex_font": "䷅",
+    "trad_chinese": "訟",
+    "pinyin": "Sòng",
+    "english": "Conflict",
+    "binary": "010111"
+  },
+  {
+    "hex": 7,
+    "hex_font": "䷆",
+    "trad_chinese": "師",
+    "pinyin": "Shī",
+    "english": "The Army",
+    "binary": "010000"
+  },
+  {
+    "hex": 8,
+    "hex_font": "䷇",
+    "trad_chinese": "比",
+    "pinyin": "Bǐ",
+    "english": "Holding Together (Union)",
+    "binary": "000010"
+  },
+  {
+    "hex": 9,
+    "hex_font": "䷈",
+    "trad_chinese": "小畜",
+    "pinyin": "Xiǎo Chù",
+    "english": "The Taming Power of the Small",
+    "binary": "111011"
+  },
+  {
+    "hex": 10,
+    "hex_font": "䷉",
+    "trad_chinese": "履",
+    "pinyin": "Lǚ",
+    "english": "Treading (Conduct)",
+    "binary": "110111"
+  },
+  {
+    "hex": 11,
+    "hex_font": "䷊",
+    "trad_chinese": "泰",
+    "pinyin": "Tài",
+    "english": "Peace",
+    "binary": "111000"
+  },
+  {
+    "hex": 12,
+    "hex_font": "䷋",
+    "trad_chinese": "否",
+    "pinyin": "Pǐ",
+    "english": "Standstill (Stagnation)",
+    "binary": "000111"
+  },
+  {
+    "hex": 13,
+    "hex_font": "䷌",
+    "trad_chinese": "同人",
+    "pinyin": "Tóng Rén",
+    "english": "Fellowship with Men",
+    "binary": "101111"
+  },
+  {
+    "hex": 14,
+    "hex_font": "䷍",
+    "trad_chinese": "大有",
+    "pinyin": "Dà Yǒu",
+    "english": "Possession in Great Measure",
+    "binary": "111101"
+  },
+  {
+    "hex": 15,
+    "hex_font": "䷎",
+    "trad_chinese": "謙",
+    "pinyin": "Qiān",
+    "english": "Modesty",
+    "binary": "001000"
+  },
+  {
+    "hex": 16,
+    "hex_font": "䷏",
+    "trad_chinese": "豫",
+    "pinyin": "Yù",
+    "english": "Enthusiasm",
+    "binary": "000100"
+  },
+  {
+    "hex": 17,
+    "hex_font": "䷐",
+    "trad_chinese": "隨",
+    "pinyin": "Suí",
+    "english": "Following",
+    "binary": "100110"
+  },
+  {
+    "hex": 18,
+    "hex_font": "䷑",
+    "trad_chinese": "蠱",
+    "pinyin": "Gǔ",
+    "english": "Work on What Has Been Spoiled (Decay)",
+    "binary": "011001"
+  },
+  {
+    "hex": 19,
+    "hex_font": "䷒",
+    "trad_chinese": "臨",
+    "pinyin": "Lín",
+    "english": "Approach",
+    "binary": "110000"
+  },
+  {
+    "hex": 20,
+    "hex_font": "䷓",
+    "trad_chinese": "觀",
+    "pinyin": "Guān",
+    "english": "Contemplation (View)",
+    "binary": "000011"
+  },
+  {
+    "hex": 21,
+    "hex_font": "䷔",
+    "trad_chinese": "噬嗑",
+    "pinyin": "Shì Kè",
+    "english": "Biting Through",
+    "binary": "100101"
+  },
+  {
+    "hex": 22,
+    "hex_font": "䷕",
+    "trad_chinese": "賁",
+    "pinyin": "Bì",
+    "english": "Grace",
+    "binary": "101001"
+  },
+  {
+    "hex": 23,
+    "hex_font": "䷖",
+    "trad_chinese": "剝",
+    "pinyin": "Bō",
+    "english": "Splitting Apart",
+    "binary": "000001"
+  },
+  {
+    "hex": 24,
+    "hex_font": "䷗",
+    "trad_chinese": "復",
+    "pinyin": "Fù",
+    "english": "Return (The Turning Point)",
+    "binary": "100000"
+  },
+  {
+    "hex": 25,
+    "hex_font": "䷘",
+    "trad_chinese": "無妄",
+    "pinyin": "Wú Wàng",
+    "english": "Innocence (The Unexpected)",
+    "binary": "100111"
+  },
+  {
+    "hex": 26,
+    "hex_font": "䷙",
+    "trad_chinese": "大畜",
+    "pinyin": "Dà Chù",
+    "english": "The Taming Power of the Great",
+    "binary": "111001"
+  },
+  {
+    "hex": 27,
+    "hex_font": "䷚",
+    "trad_chinese": "頤",
+    "pinyin": "Yí",
+    "english": "The Corners of the Mouth (Nourishment)",
+    "binary": "100001"
+  },
+  {
+    "hex": 28,
+    "hex_font": "䷛",
+    "trad_chinese": "大過",
+    "pinyin": "Dà Guò",
+    "english": "Preponderance of the Great",
+    "binary": "011110"
+  },
+  {
+    "hex": 29,
+    "hex_font": "䷜",
+    "trad_chinese": "坎",
+    "pinyin": "Kǎn",
+    "english": "The Abysmal (Water)",
+    "binary": "010010"
+  },
+  {
+    "hex": 30,
+    "hex_font": "䷝",
+    "trad_chinese": "離",
+    "pinyin": "Lí",
+    "english": "The Clinging (Fire)",
+    "binary": "101101"
+  },
+  {
+    "hex": 31,
+    "hex_font": "䷞",
+    "trad_chinese": "咸",
+    "pinyin": "Xián",
+    "english": "Influence (Wooing)",
+    "binary": "001110"
+  },
+  {
+    "hex": 32,
+    "hex_font": "䷟",
+    "trad_chinese": "恆",
+    "pinyin": "Héng",
+    "english": "Duration",
+    "binary": "011100"
+  },
+  {
+    "hex": 33,
+    "hex_font": "䷠",
+    "trad_chinese": "遯",
+    "pinyin": "Dùn",
+    "english": "Retreat",
+    "binary": "001111"
+  },
+  {
+    "hex": 34,
+    "hex_font": "䷡",
+    "trad_chinese": "大壯",
+    "pinyin": "Dà Zhuàng",
+    "english": "The Power of the Great",
+    "binary": "111100"
+  },
+  {
+    "hex": 35,
+    "hex_font": "䷢",
+    "trad_chinese": "晉",
+    "pinyin": "Jìn",
+    "english": "Progress",
+    "binary": "000101"
+  },
+  {
+    "hex": 36,
+    "hex_font": "䷣",
+    "trad_chinese": "明夷",
+    "pinyin": "Míng Yí",
+    "english": "Darkening of the Light",
+    "binary": "101000"
+  },
+  {
+    "hex": 37,
+    "hex_font": "䷤",
+    "trad_chinese": "家人",
+    "pinyin": "Jiā Rén",
+    "english": "The Family (The Clan)",
+    "binary": "101011"
+  },
+  {
+    "hex": 38,
+    "hex_font": "䷥",
+    "trad_chinese": "睽",
+    "pinyin": "Kuí",
+    "english": "Opposition",
+    "binary": "110101"
+  },
+  {
+    "hex": 39,
+    "hex_font": "䷦",
+    "trad_chinese": "蹇",
+    "pinyin": "Jiǎn",
+    "english": "Obstruction",
+    "binary": "001010"
+  },
+  {
+    "hex": 40,
+    "hex_font": "䷧",
+    "trad_chinese": "解",
+    "pinyin": "Xiè",
+    "english": "Deliverance",
+    "binary": "010100"
+  },
+  {
+    "hex": 41,
+    "hex_font": "䷨",
+    "trad_chinese": "損",
+    "pinyin": "Sǔn",
+    "english": "Decrease",
+    "binary": "110001"
+  },
+  {
+    "hex": 42,
+    "hex_font": "䷩",
+    "trad_chinese": "益",
+    "pinyin": "Yì",
+    "english": "Increase",
+    "binary": "100011"
+  },
+  {
+    "hex": 43,
+    "hex_font": "䷪",
+    "trad_chinese": "夬",
+    "pinyin": "Guài",
+    "english": "Break-through (Resoluteness)",
+    "binary": "111110"
+  },
+  {
+    "hex": 44,
+    "hex_font": "䷫",
+    "trad_chinese": "姤",
+    "pinyin": "Gòu",
+    "english": "Coming to Meet",
+    "binary": "011111"
+  },
+  {
+    "hex": 45,
+    "hex_font": "䷬",
+    "trad_chinese": "萃",
+    "pinyin": "Cuì",
+    "english": "Gathering Together (Massing)",
+    "binary": "000110"
+  },
+  {
+    "hex": 46,
+    "hex_font": "䷭",
+    "trad_chinese": "升",
+    "pinyin": "Shēng",
+    "english": "Pushing Upward",
+    "binary": "011000"
+  },
+  {
+    "hex": 47,
+    "hex_font": "䷮",
+    "trad_chinese": "困",
+    "pinyin": "Kùn",
+    "english": "Oppression (Exhaustion)",
+    "binary": "010110"
+  },
+  {
+    "hex": 48,
+    "hex_font": "䷯",
+    "trad_chinese": "井",
+    "pinyin": "Jǐng",
+    "english": "The Well",
+    "binary": "011010"
+  },
+  {
+    "hex": 49,
+    "hex_font": "䷰",
+    "trad_chinese": "革",
+    "pinyin": "Gé",
+    "english": "Revolution (Molting)",
+    "binary": "101110"
+  },
+  {
+    "hex": 50,
+    "hex_font": "䷱",
+    "trad_chinese": "鼎",
+    "pinyin": "Dǐng",
+    "english": "The Cauldron",
+    "binary": "011101"
+  },
+  {
+    "hex": 51,
+    "hex_font": "䷲",
+    "trad_chinese": "震",
+    "pinyin": "Zhèn",
+    "english": "The Arousing (Shock, Thunder)",
+    "binary": "100100"
+  },
+  {
+    "hex": 52,
+    "hex_font": "䷳",
+    "trad_chinese": "艮",
+    "pinyin": "Gèn",
+    "english": "Keeping Still (Mountain)",
+    "binary": "001001"
+  },
+  {
+    "hex": 53,
+    "hex_font": "䷴",
+    "trad_chinese": "漸",
+    "pinyin": "Jiàn",
+    "english": "Development (Gradual Progress)",
+    "binary": "001011"
+  },
+  {
+    "hex": 54,
+    "hex_font": "䷵",
+    "trad_chinese": "歸妹",
+    "pinyin": "Guī Mèi",
+    "english": "The Marrying Maiden",
+    "binary": "110100"
+  },
+  {
+    "hex": 55,
+    "hex_font": "䷶",
+    "trad_chinese": "豐",
+    "pinyin": "Fēng",
+    "english": "Abundance (Fullness)",
+    "binary": "101100"
+  },
+  {
+    "hex": 56,
+    "hex_font": "䷷",
+    "trad_chinese": "旅",
+    "pinyin": "Lǚ",
+    "english": "The Wanderer",
+    "binary": "001101"
+  },
+  {
+    "hex": 57,
+    "hex_font": "䷸",
+    "trad_chinese": "巽",
+    "pinyin": "Xùn",
+    "english": "The Gentle (Penetrating, Wind)",
+    "binary": "011011"
+  },
+  {
+    "hex": 58,
+    "hex_font": "䷹",
+    "trad_chinese": "兌",
+    "pinyin": "Duì",
+    "english": "The Joyous (Lake)",
+    "binary": "110110"
+  },
+  {
+    "hex": 59,
+    "hex_font": "䷺",
+    "trad_chinese": "渙",
+    "pinyin": "Huàn",
+    "english": "Dispersion (Dissolution)",
+    "binary": "010011"
+  },
+  {
+    "hex": 60,
+    "hex_font": "䷻",
+    "trad_chinese": "節",
+    "pinyin": "Jié",
+    "english": "Limitation",
+    "binary": "110010"
+  },
+  {
+    "hex": 61,
+    "hex_font": "䷼",
+    "trad_chinese": "中孚",
+    "pinyin": "Zhōng Fú",
+    "english": "Inner Truth",
+    "binary": "110011"
+  },
+  {
+    "hex": 62,
+    "hex_font": "䷽",
+    "trad_chinese": "小過",
+    "pinyin": "Xiǎo Guò",
+    "english": "Preponderance of the Small",
+    "binary": "001100"
+  },
+  {
+    "hex": 63,
+    "hex_font": "䷾",
+    "trad_chinese": "既濟",
+    "pinyin": "Jì Jì",
+    "english": "After Completion",
+    "binary": "101010"
+  },
+  {
+    "hex": 64,
+    "hex_font": "䷿",
+    "trad_chinese": "未濟",
+    "pinyin": "Wèi Jì",
+    "english": "Before Completion",
+    "binary": "010101"
+  }
+]
