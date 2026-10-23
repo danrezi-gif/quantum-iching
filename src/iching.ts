@@ -1,29 +1,22 @@
 import type { CastLine, Hexagram, LineValue } from './types'
-// @ts-ignore
-import wilhelmRaw from './data/wilhelm_raw.js'
-// @ts-ignore
-import wilhelmPt from './data/wilhelm_pt.js'
+import meta from './data/hexagrams_meta.json'
+import legge from './data/legge.json'
 
-const wilhelm: Record<string, Hexagram> = wilhelmRaw
-
+// Historical text: James Legge (1882), public domain, independently sourced.
 export interface HexTexts {
   judgment: string
   image: string
   lines: Record<string, string>
 }
 
-export function getTexts(hexNum: number, lang: string): HexTexts {
-  const src = lang === 'pt' ? wilhelmPt : wilhelmRaw
-  const h = src[String(hexNum)]
-  if (lang === 'pt') return h as HexTexts
-  return {
-    judgment: h.wilhelm_judgment.text,
-    image: h.wilhelm_image.text,
-    lines: Object.fromEntries(
-      Object.entries(h.wilhelm_lines as Record<string, { text: string }>)
-        .map(([k, v]) => [k, v.text])
-    ),
-  }
+const byNumber: Record<number, Hexagram> = Object.fromEntries(
+  meta.map(entry => [entry.hex, entry])
+)
+
+export function getTexts(hexNum: number, _lang?: string): HexTexts {
+  const src = (legge as Record<string, HexTexts>)[String(hexNum)]
+  if (!src) throw new Error('Unknown hexagram')
+  return src
 }
 
 // King Wen lookup table: KW_TABLE[aboveIdx][belowIdx] → hexagram number
@@ -66,7 +59,7 @@ export function castToHexagram(cast: CastLine[]): {
   const aboveIdx = trigramIndex(aboveLines)
 
   const primaryNum = KW_TABLE[aboveIdx][belowIdx]
-  const primary = wilhelm[String(primaryNum)]
+  const primary = byNumber[primaryNum]
 
   // Moving lines: 6 (old yin → yang) or 9 (old yang → yin)
   const movingLines = values
@@ -84,7 +77,7 @@ export function castToHexagram(cast: CastLine[]): {
     const cBelow: [LineValue, LineValue, LineValue] = [changedValues[0], changedValues[1], changedValues[2]]
     const cAbove: [LineValue, LineValue, LineValue] = [changedValues[3], changedValues[4], changedValues[5]]
     const changedNum = KW_TABLE[trigramIndex(cAbove)][trigramIndex(cBelow)]
-    changing = wilhelm[String(changedNum)]
+    changing = byNumber[changedNum]
   }
 
   return { primary, changing, movingLines }
@@ -96,7 +89,7 @@ export function coinsToLineValue(coins: [number, number, number]): LineValue {
 }
 
 export function getHexagram(n: number): Hexagram {
-  return wilhelm[String(n)]
+  return byNumber[n]
 }
 
-export { wilhelm }
+export { byNumber as hexagrams }

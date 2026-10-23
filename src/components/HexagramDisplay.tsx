@@ -10,7 +10,7 @@ const LINE_GAP = 12
 const BREAK_W = 14       // gap in yin line
 const TOTAL = 6
 
-export default function HexagramDisplay({ lines, totalLines = 6 }: Props) {
+export default function HexagramDisplay({ lines }: Props) {
   const svgH = TOTAL * (LINE_H + LINE_GAP) - LINE_GAP + 4
   const W = 130
 
@@ -27,7 +27,6 @@ export default function HexagramDisplay({ lines, totalLines = 6 }: Props) {
         const castLine = lines[i]
         const isMoving = castLine && (castLine.value === 6 || castLine.value === 9)
         const isYang = castLine && (castLine.value === 7 || castLine.value === 9)
-        const isYin = castLine && (castLine.value === 6 || castLine.value === 8)
         const revealed = !!castLine
 
         const color = revealed

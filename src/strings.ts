@@ -32,13 +32,13 @@ const strings = {
     castAgain: 'Cast again',
     oracleSilent: 'The oracle fell silent. Please try again.',
 
-    // Wilhelm source note
-    wilhelmNote: 'Wilhelm translation — original English',
+    // Public-domain source note
+    sourceNote: 'Historical source: James Legge (1882), public domain',
 
     // Info overlay
     aboutTitle: 'About this oracle',
     aboutP1: 'Quantum I Ching uses the traditional three-coin method of divination, but replaces physical coins with quantum randomness sourced from photon detection hardware at the LfD Laboratory in Germany (ID Quantique). Each coin flip is derived from a single bit of a genuine quantum random number — not a mathematical simulation.',
-    aboutP2: 'Three coins are cast per line, six lines build the hexagram from the bottom up. A coin summing to 6 or 9 becomes a moving line — the seed of transformation — and generates a second, changing hexagram. The interpretation draws on the Richard Wilhelm translation of the I Ching (1950), the canonical Western edition.',
+    aboutP2: 'Three coins are cast per line, six lines build the hexagram from the bottom up. A coin summing to 6 or 9 becomes a moving line — the seed of transformation — and generates a second, changing hexagram. The interpretation draws on the 1882 James Legge public-domain English translation, with contemporary AI reflection.',
     coinMethodTitle: 'The coin method',
     coinMethod: [
       ['6 — old yin ──×──', 'Three tails. A moving line — yin transforming into yang.'],
@@ -48,7 +48,7 @@ const strings = {
     ] as [string, string][],
     sourcesTitle: 'Sources',
     sourceLfD: 'LfD Laboratory — Quantum Random Number Generation (ID Quantique hardware)',
-    sourceWilhelm: 'Richard Wilhelm — I Ching or Book of Changes (1950)',
+    sourceLegge: 'James Legge — The Yî King (1882), public domain',
   },
 
   pt: {
@@ -82,13 +82,13 @@ const strings = {
     castAgain: 'Lançar novamente',
     oracleSilent: 'O oráculo silenciou. Por favor, tente novamente.',
 
-    // Wilhelm source note
-    wilhelmNote: 'Tradução de Wilhelm — versão em português',
+    // Public-domain source note
+    sourceNote: 'Fonte histórica em inglês: James Legge (1882), domínio público',
 
     // Info overlay
     aboutTitle: 'Sobre este oráculo',
     aboutP1: 'O I Ching Quântico utiliza o método tradicional dos três trigramas, mas substitui as moedas físicas por aleatoriedade quântica proveniente de hardware de detecção de fótons no Laboratório LfD na Alemanha (ID Quantique). Cada lançamento de moeda é derivado de um único bit de um número quântico genuinamente aleatório — não uma simulação matemática.',
-    aboutP2: 'Três moedas são lançadas por linha, seis linhas constroem o hexagrama de baixo para cima. Uma soma de 6 ou 9 torna-se uma linha em movimento — a semente da transformação — e gera um segundo hexagrama em mudança. A interpretação baseia-se na tradução de Richard Wilhelm do I Ching (1950), a edição ocidental canônica.',
+    aboutP2: 'Três moedas são lançadas por linha, seis linhas constroem o hexagrama de baixo para cima. Uma soma de 6 ou 9 torna-se uma linha em movimento — a semente da transformação — e gera um segundo hexagrama em mudança. A interpretação usa a tradução inglesa de James Legge (1882), de domínio público, e uma reflexão contemporânea em português gerada por IA.',
     coinMethodTitle: 'O método das moedas',
     coinMethod: [
       ['6 — yin velho ──×──', 'Três coroas. Linha em movimento — yin transformando-se em yang.'],
@@ -98,7 +98,7 @@ const strings = {
     ] as [string, string][],
     sourcesTitle: 'Fontes',
     sourceLfD: 'Laboratório LfD — Geração de Números Aleatórios Quânticos (hardware ID Quantique)',
-    sourceWilhelm: 'Richard Wilhelm — I Ching ou o Livro das Mutações (1950)',
+    sourceLegge: 'James Legge — The Yî King (1882), domínio público',
   },
 }
 

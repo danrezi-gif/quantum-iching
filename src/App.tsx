@@ -320,7 +320,7 @@ export default function App() {
                   {s.sourceLfD}
                 </a>
                 <a
-                  href="https://archive.org/details/ichingorbookof00bayn"
+                  href="https://github.com/root-house-code/yijing-quiet-oracle/blob/main/src/data/translations/legge.json"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -330,7 +330,7 @@ export default function App() {
                     lineHeight: 1.6,
                   }}
                 >
-                  {s.sourceWilhelm}
+                  {s.sourceLegge}
                 </a>
               </div>
             </div>

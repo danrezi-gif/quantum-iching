@@ -7,7 +7,8 @@
     "dev": "concurrently -k \"cross-env NODE_ENV=development tsx server/index.ts\" \"vite --port 5173\"",
     "server": "cross-env NODE_ENV=development tsx server/index.ts",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check": "tsc -b && vite build && node scripts/validate-corpus.mjs && tsx --test server/credits.test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.82.0",
