@@ -1,67 +1,50 @@
-# Quantum I Ching
+# Quantum I Ching — paid pilot (not deployed)
 
-**An interactive oracle bringing an ancient symbolic system into dialogue with quantum randomness and AI interpretation.**
+A reflective oracle joining physical quantum randomness to the I Ching. The free casting experience is preserved. The **optional** premium experience sells **five extended reflections for $9**, with no subscription.
 
-[Open the oracle](https://iching.monkadelic.me)
+This is a **feature branch**. `main` and the current production deployment remain untouched until reviewed, tested and explicitly merged.
 
-![Quantum I Ching](public/zen-background.png)
+## Copyright-cleared textual corpus
 
-Quantum I Ching preserves the traditional six-line casting structure of the *I Ching*, but replaces physical coins with bits from a hardware quantum random-number source. The resulting hexagram and moving lines are then interpreted through an AI layer grounded in the Wilhelm translation.
+Classical English texts come from James Legge's *The Yî King* (1882), public domain, via the Chinese Text Project transcription collected by [root-house-code/yijing-quiet-oracle](https://github.com/root-house-code/yijing-quiet-oracle). Included here: all 64 judgments, 64 Great Images, 384 line passages. Source details and limitations: [src/data/SOURCES.md](src/data/SOURCES.md).
 
-The project is less interested in claiming that quantum randomness is spiritually privileged than in the experience created when **question, chance, symbol and interpretation** meet inside a contemporary computational system.
+The former Wilhelm/Baynes-based English source and derivative Portuguese source have been **removed from the feature branch working tree**. They still exist in prior Git commits; rewriting public history is **not** performed. The free and premium AI prompts now use only the public-domain Legge dataset on the server. The existing Brazilian Portuguese UI and AI explanations remain; classical source citations display in **English** with an explicit source-language notice. A newly authored Portuguese classical-text edition can be added subsequently.
 
-Available in English and Portuguese.
+## Premium flow
 
-## The experience
+1. Reader casts normally and sees the free three-paragraph reflection.
+2. Optionally buys a **$9 five-reading pack** via a Ko-fi Shop product.
+3. Ko-fi posts a Shop Order webhook to `POST /api/kofi/webhook`. The webhook is validated using the private Ko-fi verification token. **Only orders containing the configured exact Shop item code** with `USD` value >= $9 per unit can grant credits. Duplicate delivery cannot mint credits twice.
+4. Buyer opens the reading and activates credits using their Ko-fi receipt email and transaction ID (often visible in a receipt link's `txid`). This yields a 256-bit bearer code stored locally in the browser.
+5. Clicking **Deepen this reading** consumes one credit for a longer, bilingual interpretive reflection with three open journaling questions. A failed model request refunds the credit. The result can be saved as a text file.
 
-1. **Intention** — enter a question or simply begin without one.
-2. **Casting** — six lines are generated sequentially from hardware quantum randomness.
-3. **Hexagram** — the resulting figure is identified through the King Wen sequence, including moving lines when present.
-4. **Reading** — an AI interpretation is generated using the Wilhelm text as its primary symbolic source.
+**Important:** This is a lightweight receipt-credential pilot, not a full account system. Receipt email + transaction ID are credentials and must be treated as private. Re-entering the receipt rotates the access token on the original browser. For a larger rollout, replace this with verified-email accounts and a transactional database.
 
-The result is not presented as prediction or proof of synchronicity. It is an experiment in what happens when an old divinatory form is mediated by contemporary computation.
+## Deployment/setup checklist (manual prerequisites)
 
-## How the casting works
+- [ ] Install dependencies: `npm ci`.
+- [ ] Run `npm run check` (TypeScript + frontend build + all 64 classical texts + receipt/credit tests).
+- [ ] Create an actual **Ko-fi Shop digital product** titled “Quantum I Ching — Five Deep Readings” at **USD $9** (not a donation button). The deliverable can be a link back to the site and buyer activation instructions. Ensure buyers can see their payment transaction ID.
+- [ ] Obtain the exact direct product URL, its `direct_link_code` from a controlled test Shop Order webhook, and the private verification token from Ko-fi webhook settings.
+- [ ] Set Ko-fi webhook destination to `https://YOUR_DEPLOYED_DOMAIN/api/kofi/webhook`.
+- [ ] Provide environment variables from `.env.example`. Use a **durable persistent volume** for `DATA_DIR`; a single Express process is essential because this pilot uses an atomic JSON ledger, not a distributed transactional database.
+- [ ] Test an authorized $9 purchase, duplicate webhook replay, activation using real receipt, insufficient-credit rejection, and failed-model refund before setting `PAID_ENABLED=true`.
+- [ ] Review refund/dispute handling, regional taxes/consumer protection, privacy disclosures, third-party AI consent and international rights questions before promoting sales.
 
-Each virtual coin draws bits from the [LfD / ID Quantique QRNG](https://lfdr.de/qrng_api/), a physical entropy source based on photon detection. Three binary values form each traditional coin cast.
+If the required variables are absent or `PAID_ENABLED` is not `true`, the paid interface is entirely hidden and all purchases are disabled. **Never enable a live paid link until the whole purchase-to-credit path is verified.**
 
-## Stack
+## Run
 
-- React 19 + TypeScript + Vite
-- Tailwind CSS v4
-- Express server with SSE streaming
-- Anthropic SDK for the interpretation layer
-- LfD / ID Quantique hardware QRNG
-
-## Hexagram texts
-
-- **English:** Richard Wilhelm translation
-- **Portuguese:** project translation derived from the English source with AI assistance
-
-The interface distinguishes source texts from generated interpretation.
-
-## Development
-
-```bash
-npm install
+```sh
+npm ci
 npm run dev
-```
-
-For the interpretation layer, create a `.env` file containing:
-
-```bash
-ANTHROPIC_API_KEY=your_key_here
-```
-
-Production:
-
-```bash
+npm run check
 npm run build
 npm run server
 ```
 
-The Express server serves the built frontend and proxies the QRNG and interpretation requests.
+Environment: Node 22+. Express server serves Vite build from `dist/public` in production. The Anthropic key is server-side only; the Ko-fi webhook token stays server-side. Rate limits are currently in-memory per IP; put a reverse proxy or WAF in front before significant traffic.
 
-## Context
+## Future products
 
-Quantum I Ching is part of [Monkadelic](https://monkadelic.me), Daniel Rezinovsky's experimental practice across consciousness, symbolic systems, immersive media and artificial intelligence.
+Atlas, Way and Ontik could use a common commerce infrastructure after this experiment establishes repeatable conversion. Do not add them to the codebase or divert effort before measuring actual paid usage.
