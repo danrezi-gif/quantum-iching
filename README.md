@@ -22,7 +22,7 @@ The former Wilhelm/Baynes-based English source and derivative Portuguese source 
 
 ## Deployment/setup checklist (manual prerequisites)
 
-- [ ] Install dependencies: `npm ci`.
+- [ ] Install dependencies: `npm install`.
 - [ ] Run `npm run check` (TypeScript + frontend build + all 64 classical texts + receipt/credit tests).
 - [ ] Create an actual **Ko-fi Shop digital product** titled “Quantum I Ching — Five Deep Readings” at **USD $9** (not a donation button). The deliverable can be a link back to the site and buyer activation instructions. Ensure buyers can see their payment transaction ID.
 - [ ] Obtain the exact direct product URL, its `direct_link_code` from a controlled test Shop Order webhook, and the private verification token from Ko-fi webhook settings.
@@ -36,14 +36,14 @@ If the required variables are absent or `PAID_ENABLED` is not `true`, the paid i
 ## Run
 
 ```sh
-npm ci
+npm install
 npm run dev
 npm run check
 npm run build
 npm run server
 ```
 
-Environment: Node 22+. Express server serves Vite build from `dist/public` in production. The Anthropic key is server-side only; the Ko-fi webhook token stays server-side. Rate limits are currently in-memory per IP; put a reverse proxy or WAF in front before significant traffic.
+NOTE: The inherited package-lock has pre-existing npm-ci inconsistencies (emnapi optional dependencies); for this feature pilot use npm install until the lockfile is regenerated and committed.\n\nEnvironment: Node 22+. Express server serves Vite build from `dist/public` in production. The Anthropic key is server-side only; the Ko-fi webhook token stays server-side. Rate limits are currently in-memory per IP; put a reverse proxy or WAF in front before significant traffic.
 
 ## Future products
 
