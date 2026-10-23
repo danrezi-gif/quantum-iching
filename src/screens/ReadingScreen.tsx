@@ -4,6 +4,7 @@ import type { Lang } from '../strings'
 import strings, { hexagramName } from '../strings'
 import { getTexts } from '../iching'
 import HexagramDisplay from '../components/HexagramDisplay'
+import PremiumOffer from './PremiumOffer'
 
 const cinzel = { fontFamily: "'Cinzel', serif" }
 const cormorant = { fontFamily: "'Cormorant Garamond', serif" }
@@ -59,17 +60,11 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
           } : null,
           movingLines,
           intention,
-          wilhelmData: {
-            judgment: texts.judgment,
-            image: texts.image,
-            lines: Object.fromEntries(
-              movingLines.map(l => [l, texts.lines[String(l)] ?? ''])
-            ),
-          },
         }),
       })
 
-      const reader = res.body!.getReader()
+      if (!res.ok || !res.body) throw new Error('Reading temporarily unavailable')
+      const reader = res.body.getReader()
       const decoder = new TextDecoder()
 
       while (true) {
@@ -278,7 +273,7 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
           )}
         </div>
 
-        {/* Wilhelm source texts — revealed after streaming */}
+        {/* Public-domain Legge source texts — revealed after streaming */}
         {!streaming && interpretation && (
           <div className="fade-in" style={{
             width: '100%',
@@ -288,6 +283,7 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
             paddingTop: 'clamp(16px, 2.5vh, 28px)',
             borderTop: '1px solid rgba(80,180,100,0.12)',
           }}>
+            <p style={{ textAlign: 'center', fontFamily: "'Cormorant Garamond', serif", color: '#7aaa80', fontSize: 14 }}>{s.sourceNote}</p>
             <div style={{ textAlign: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 12, marginBottom: 10 }}>
                 <p style={{
@@ -331,6 +327,11 @@ export default function ReadingScreen({ lang, reading, lines, intention, onReset
               </p>
             </div>
           </div>
+        )}
+
+        {!streaming && interpretation && (
+          <PremiumOffer lang={lang} primary={primary} changing={changing}
+            movingLines={movingLines} intention={intention} />
         )}
 
         {/* Cast again */}
