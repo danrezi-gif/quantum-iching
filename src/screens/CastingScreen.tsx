@@ -22,7 +22,7 @@ export default function CastingScreen({ lang, lines, onLineCast, onComplete }: P
   const s = strings[lang]
   const [castState, setCastState] = useState<CastState>('idle')
   const [currentCoins, setCurrentCoins] = useState<[number, number, number] | null>(null)
-  const [coinsReady, setCoinsReady] = useState(0)
+  const [, setCoinsReady] = useState(0)
   const [error, setError] = useState('')
   const lineRegisteredRef = useRef(false)
 
