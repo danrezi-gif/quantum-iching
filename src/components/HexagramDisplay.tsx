@@ -10,7 +10,7 @@ const LINE_GAP = 12
 const BREAK_W = 14       // gap in yin line
 const TOTAL = 6
 
-export default function HexagramDisplay({ lines, totalLines = 6 }: Props) {
+export default function HexagramDisplay({ lines }: Props) {
   const svgH = TOTAL * (LINE_H + LINE_GAP) - LINE_GAP + 4
   const W = 130
 
