@@ -32,13 +32,13 @@ const strings = {
     castAgain: 'Cast again',
     oracleSilent: 'The oracle fell silent. Please try again.',
 
-    // Wilhelm source note
+    // Public-domain source note
     sourceNote: 'Historical source: James Legge (1882), public domain',
 
     // Info overlay
     aboutTitle: 'About this oracle',
     aboutP1: 'Quantum I Ching uses the traditional three-coin method of divination, but replaces physical coins with quantum randomness sourced from photon detection hardware at the LfD Laboratory in Germany (ID Quantique). Each coin flip is derived from a single bit of a genuine quantum random number — not a mathematical simulation.',
-    aboutP2: 'Three coins are cast per line, six lines build the hexagram from the bottom up. A coin summing to 6 or 9 becomes a moving line — the seed of transformation — and generates a second, changing hexagram. The interpretation draws on James Legge's 1882 public-domain English translation, with contemporary AI reflection.',
+    aboutP2: 'Three coins are cast per line, six lines build the hexagram from the bottom up. A coin summing to 6 or 9 becomes a moving line — the seed of transformation — and generates a second, changing hexagram. The interpretation draws on the 1882 James Legge public-domain English translation, with contemporary AI reflection.',
     coinMethodTitle: 'The coin method',
     coinMethod: [
       ['6 — old yin ──×──', 'Three tails. A moving line — yin transforming into yang.'],
@@ -82,7 +82,7 @@ const strings = {
     castAgain: 'Lançar novamente',
     oracleSilent: 'O oráculo silenciou. Por favor, tente novamente.',
 
-    // Wilhelm source note
+    // Public-domain source note
     sourceNote: 'Fonte histórica em inglês: James Legge (1882), domínio público',
 
     // Info overlay
