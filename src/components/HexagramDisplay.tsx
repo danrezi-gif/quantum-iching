@@ -27,7 +27,6 @@ export default function HexagramDisplay({ lines }: Props) {
         const castLine = lines[i]
         const isMoving = castLine && (castLine.value === 6 || castLine.value === 9)
         const isYang = castLine && (castLine.value === 7 || castLine.value === 9)
-        const isYin = castLine && (castLine.value === 6 || castLine.value === 8)
         const revealed = !!castLine
 
         const color = revealed
